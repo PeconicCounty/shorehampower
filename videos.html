@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Library — Shoreham Power</title>
+<meta name="description" content="Fact-based videos that dismantle the most common myths about nuclear energy — waste, safety, cost, and why America stopped building.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,600..900&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#081826;--ink-2:#0E2436;--paper:#F4F3EE;--sand:#DCD2BC;
+    --cherenkov:#3FD7FF;--cherenkov-deep:#1877D2;--signal:#FFB03A;
+    --line:rgba(63,215,255,.22);--max:1120px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--paper);font-family:'Public Sans',system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--cherenkov);color:var(--ink)}
+  a{color:var(--cherenkov);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--cherenkov)}
+  h1,h2,h3{font-family:'Archivo',sans-serif;font-stretch:125%;line-height:1.06;letter-spacing:-.01em}
+  h1{font-size:clamp(36px,6vw,68px);font-weight:900;text-transform:uppercase}
+  h2{font-size:clamp(26px,3.8vw,38px);font-weight:800;margin:12px 0 10px}
+  p.lede{font-size:clamp(17px,2vw,20px);color:#C9D6DE;max-width:64ch}
+  :focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(8,24,38,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:900;font-size:18px;color:var(--paper)}
+  .logo b{color:var(--cherenkov)}
+  .nav-links{display:flex;gap:28px;font-size:14px;font-weight:500}
+  .nav-links a{color:#AEC3CF}
+  .nav-links a:hover{color:var(--cherenkov);text-decoration:none}
+  @media(max-width:820px){.nav-links{display:none}}
+
+  header.page{padding:88px 0 60px;
+    background:
+      radial-gradient(1000px 520px at 78% 120%, rgba(24,119,210,.34), transparent 60%),
+      radial-gradient(760px 380px at 74% 128%, rgba(63,215,255,.26), transparent 55%),
+      var(--ink);
+    border-bottom:1px solid var(--line)}
+  header.page .lede{margin-top:22px}
+
+  .myth-block{padding:76px 0 24px}
+  .myth-head{max-width:760px;margin-bottom:8px}
+  .myth-claim{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#FF7A6B;border:1px solid rgba(255,122,107,.4);padding:5px 12px;border-radius:3px;margin-bottom:14px}
+  .myth-verdict{color:#93ABB8;font-size:15.5px;max-width:66ch}
+
+  .vid-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:38px}
+  @media(max-width:820px){.vid-grid{grid-template-columns:1fr}}
+  .vid-card{background:var(--ink-2);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s ease,border-color .15s ease}
+  .vid-card:hover{transform:translateY(-3px);border-color:rgba(63,215,255,.5)}
+  .vid-frame{position:relative;width:100%;aspect-ratio:16/9;background:#000}
+  .vid-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  a.vid-thumb{position:absolute;inset:0;display:block}
+  a.vid-thumb img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
+  a.vid-thumb:hover img{opacity:1}
+  .play-badge{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(8,24,38,.82);border:2px solid var(--cherenkov);display:flex;align-items:center;justify-content:center;transition:transform .15s,box-shadow .15s;pointer-events:none}
+  a.vid-thumb:hover .play-badge{transform:translate(-50%,-50%) scale(1.08);box-shadow:0 0 28px rgba(63,215,255,.5)}
+  .play-badge::after{content:"";display:block;margin-left:5px;border-style:solid;border-width:11px 0 11px 18px;border-color:transparent transparent transparent var(--cherenkov)}
+  .watch-cta{display:inline-block;margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--cherenkov)}
+  .vid-body{padding:22px 24px 24px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .vid-chan{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cherenkov)}
+  .vid-body h3{font-size:18px;font-weight:700}
+  .vid-body p{font-size:14.5px;color:#AEC3CF;flex:1}
+  .vid-why{font-size:13px;color:#7FA0B2;border-top:1px solid var(--line);padding-top:12px;margin-top:6px}
+  .vid-why b{color:var(--signal);font-weight:600}
+
+  .featured{border:1px solid rgba(63,215,255,.5);box-shadow:0 0 40px rgba(63,215,255,.12)}
+  .feat-tag{position:absolute;top:12px;left:12px;z-index:2;background:var(--cherenkov);color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;padding:4px 10px;border-radius:3px;text-transform:uppercase}
+
+  .more{padding:80px 0 96px}
+  .more-list{margin-top:36px;border-top:1px solid var(--line)}
+  .more-row{display:grid;grid-template-columns:180px 1fr auto;gap:24px;align-items:baseline;padding:22px 8px;border-bottom:1px solid var(--line)}
+  .more-row:hover{background:rgba(63,215,255,.05)}
+  .more-row .m-chan{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#7FA0B2}
+  .more-row h3{font-size:16.5px}
+  .more-row p{font-size:14px;color:#93ABB8;margin-top:3px}
+  .more-row .m-link{font-family:'IBM Plex Mono',monospace;font-size:12.5px;white-space:nowrap}
+  @media(max-width:680px){.more-row{grid-template-columns:1fr}}
+
+  .cta-band{background:linear-gradient(180deg,var(--ink-2),var(--ink));border-top:1px solid var(--line);text-align:center;padding:80px 0}
+  .btn{display:inline-block;font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:800;font-size:15px;letter-spacing:.04em;text-transform:uppercase;padding:15px 28px;border-radius:4px;background:var(--cherenkov);color:var(--ink);transition:transform .15s,box-shadow .15s}
+  .btn:hover{text-decoration:none;transform:translateY(-2px);box-shadow:0 8px 32px rgba(63,215,255,.35)}
+  footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:#6E8896}
+  .disclaimer{font-size:12px;color:#54707F;max-width:76ch;margin-top:12px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-in">
+    <a class="logo" href="/">SHOREHAM<b>POWER</b>.COM</a>
+    <div class="nav-links">
+      <a href="/#case">The Case</a>
+      <a href="/#history">History</a>
+      <a href="/#studies">Studies</a>
+      <a href="#" style="color:var(--cherenkov)">Video Library</a>
+      <a href="/#join">Join the Campaign</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page">
+  <div class="wrap">
+    <p class="eyebrow">Video Library</p>
+    <h1>See past the <span style="color:var(--cherenkov)">fear.</span></h1>
+    <p class="lede">Fear killed Shoreham once — fear built on myths about waste, radiation, and meltdowns that don't survive contact with the evidence. These videos, from physicists, engineers, and independent journalists, take on the biggest anti-nuclear claims one by one. Watch them, share them, and send them to the skeptic in your group chat.</p>
+  </div>
+</header>
+
+<section class="myth-block">
+  <div class="wrap">
+    <div class="myth-head">
+      <span class="myth-claim">The Claim: "Nuclear power is a lie — it's dirty, dangerous, and dying"</span>
+      <h2>Start here: the big picture</h2>
+      <p class="myth-verdict">The reality: nuclear is among the safest, cleanest energy sources ever measured per unit of electricity produced. These two explain what really stalled it in America — and it wasn't the science.</p>
+    </div>
+    <div class="vid-grid">
+      <div class="vid-card featured">
+        <div class="vid-frame">
+          <span class="feat-tag">The One That Started It</span>
+          <a class="vid-thumb" href="https://www.youtube.com/watch?v=cxDd3Whl_9s" target="_blank" rel="noopener" aria-label="Watch: Maxinomics — You're Being Lied to About Nuclear"><img src="https://img.youtube.com/vi/cxDd3Whl_9s/hqdefault.jpg" alt="Maxinomics — You're Being Lied to About Nuclear" loading="lazy"><span class="play-badge"></span></a>
+        </div>
+        <div class="vid-body">
+          <span class="vid-chan">Maxinomics</span>
+          <h3>You're Being Lied to About Nuclear</h3>
+          <p>In 1969 the U.S. was commissioning three reactors a year — then the industry collapsed almost overnight. The story of how regulation, fear, and economics strangled American nuclear, and why SMRs can bring it back.</p>
+          <div class="vid-why"><b>Use it for:</b> the "nuclear failed on its own merits" argument. It didn't — and Shoreham is Exhibit A.</div>
+          <a class="watch-cta" href="https://www.youtube.com/watch?v=cxDd3Whl_9s" target="_blank" rel="noopener">▶ Watch on YouTube →</a>
+        </div>
+      </div>
+      <div class="vid-card">
+        <div class="vid-frame">
+          <a class="vid-thumb" href="https://www.youtube.com/watch?v=e4FVIYzFTws" target="_blank" rel="noopener" aria-label="Watch: Nuclear Engineer Reacts to Maxinomics"><img src="https://img.youtube.com/vi/e4FVIYzFTws/hqdefault.jpg" alt="Nuclear Engineer Reacts to Maxinomics" loading="lazy"><span class="play-badge"></span></a>
+        </div>
+        <div class="vid-body">
+          <span class="vid-chan">T. Folse Nuclear (Nuclear Engineer)</span>
+          <h3>Nuclear Engineer Reacts to Maxinomics</h3>
+          <p>A working nuclear engineer fact-checks the Maxinomics video claim by claim — and mostly confirms it. Great credibility-stacker to pair with the original.</p>
+          <div class="vid-why"><b>Use it for:</b> "that video is just hype" pushback. An industry professional checked the math.</div>
+          <a class="watch-cta" href="https://www.youtube.com/watch?v=e4FVIYzFTws" target="_blank" rel="noopener">▶ Watch on YouTube →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="myth-block">
+  <div class="wrap">
+    <div class="myth-head">
+      <span class="myth-claim">The Claim: "There's no solution for nuclear waste"</span>
+      <h2>The waste myth</h2>
+      <p class="myth-verdict">The reality: all U.S. spent commercial fuel ever produced would fit on a single football field stacked about 10 yards high, sealed in engineered casks with a flawless storage safety record. It's the most carefully managed waste stream of any industry.</p>
+    </div>
+    <div class="vid-grid">
+      <div class="vid-card">
+        <div class="vid-frame">
+          <a class="vid-thumb" href="https://www.youtube.com/watch?v=lhHHbgIy9jU" target="_blank" rel="noopener" aria-label="Watch: Kyle Hill — I Kissed Nuclear Waste to Prove a Point"><img src="https://img.youtube.com/vi/lhHHbgIy9jU/hqdefault.jpg" alt="Kyle Hill — I Kissed Nuclear Waste to Prove a Point" loading="lazy"><span class="play-badge"></span></a>
+        </div>
+        <div class="vid-body">
+          <span class="vid-chan">Kyle Hill</span>
+          <h3>I Kissed Nuclear Waste to Prove a Point</h3>
+          <p>Science educator Kyle Hill visits a working nuclear plant and puts his lips on a dry storage cask holding spent fuel — because the physics says he can. Over a million views of pure myth demolition.</p>
+          <div class="vid-why"><b>Use it for:</b> the "glowing green goop" mental image. Real waste is solid ceramic pellets in steel and concrete.</div>
+          <a class="watch-cta" href="https://www.youtube.com/watch?v=lhHHbgIy9jU" target="_blank" rel="noopener">▶ Watch on YouTube →</a>
+        </div>
+      </div>
+      <div class="vid-card">
+        <div class="vid-frame">
+          <a class="vid-thumb" href="https://www.youtube.com/watch?v=4aUODXeAM-k" target="_blank" rel="noopener" aria-label="Watch: Kyle Hill — We Solved Nuclear Waste Decades Ago"><img src="https://img.youtube.com/vi/4aUODXeAM-k/hqdefault.jpg" alt="Kyle Hill — We Solved Nuclear Waste Decades Ago" loading="lazy"><span class="play-badge"></span></a>
+        </div>
+        <div class="vid-body">
+          <span class="vid-chan">Kyle Hill</span>
+          <h3>We Solved Nuclear Waste Decades Ago</h3>
+          <p>The technical deep-dive companion: how dry cask storage, deep geologic disposal, and fuel recycling actually work — and why "we don't know what to do with it" is a political problem, not an engineering one.</p>
+          <div class="vid-why"><b>Use it for:</b> the follow-up debate after the cask kiss gets their attention.</div>
+          <a class="watch-cta" href="https://www.youtube.com/watch?v=4aUODXeAM-k" target="_blank" rel="noopener">▶ Watch on YouTube →</a>
+        </div>
+      </div>
+      <div class="vid-card">
+        <div class="vid-frame">
+          <a class="vid-thumb" href="https://www.youtube.com/watch?v=Wwr0aOOYtvo" target="_blank" rel="noopener" aria-label="Watch: Nuclear Physicist Reacts to Cleo Abram's The Big Lie About Nuclear Waste"><img src="https://img.youtube.com/vi/Wwr0aOOYtvo/hqdefault.jpg" alt="Nuclear Physicist Reacts to Cleo Abram's The Big Lie About Nuclear Waste" loading="lazy"><span class="play-badge"></span></a>
+        </div>
+        <div class="vid-body">
+          <span class="vid-chan">Elina Charatsidou (Nuclear Physicist)</span>
+          <h3>Physicist Reacts: "The Big Lie About Nuclear Waste"</h3>
+          <p>A nuclear physicist reviews Cleo Abram's viral waste explainer, adding technical depth on recycling spent fuel — which still holds over 90% of its usable energy.</p>
+          <div class="vid-why"><b>Use it for:</b> viewers who want expert verification, not just a journalist's take.</div>
+          <a class="watch-cta" href="https://www.youtube.com/watch?v=Wwr0aOOYtvo" target="_blank" rel="noopener">▶ Watch on YouTube →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="myth-block">
+  <div class="wrap">
+    <div class="myth-head">
+      <span class="myth-claim">The Claim: "We stopped building nuclear because it's too dangerous"</span>
+      <h2>What actually happened to American nuclear</h2>
+      <p class="myth-verdict">The reality: fear after Three Mile Island — an accident with no detectable public health impact — plus shifting regulation and financing costs froze the industry. This is Shoreham's own story, told nationally.</p>
+    </div>
+    <div class="vid-grid">
+      <div class="vid-card">
+        <div class="vid-frame">
+          <a class="vid-thumb" href="https://www.youtube.com/watch?v=s7XDlRtGNyM" target="_blank" rel="noopener" aria-label="Watch: Johnny Harris — Why Did We Abandon Nuclear Energy?"><img src="https://img.youtube.com/vi/s7XDlRtGNyM/hqdefault.jpg" alt="Johnny Harris — Why Did We Abandon Nuclear Energy?" loading="lazy"><span class="play-badge"></span></a>
+        </div>
+        <div class="vid-body">
+          <span class="vid-chan">Johnny Harris ft. Cleo Abram</span>
+          <h3>Why Did We Abandon Nuclear Energy?</h3>
+          <p>Journalist Johnny Harris traces how a technology that was decarbonizing the grid got abandoned — the politics, the fear campaigns, and what we gave up.</p>
+          <div class="vid-why"><b>Use it for:</b> persuadable skeptics — Harris's audience skews mainstream, not pro-nuclear.</div>
+          <a class="watch-cta" href="https://www.youtube.com/watch?v=s7XDlRtGNyM" target="_blank" rel="noopener">▶ Watch on YouTube →</a>
+        </div>
+      </div>
+      <div class="vid-card">
+        <div class="vid-frame">
+          <a class="vid-thumb" href="https://www.youtube.com/watch?v=QzTgZ6kOEM8" target="_blank" rel="noopener" aria-label="Watch: Cleo Abram — WTF Happened to Nuclear Energy?"><img src="https://img.youtube.com/vi/QzTgZ6kOEM8/hqdefault.jpg" alt="Cleo Abram — WTF Happened to Nuclear Energy?" loading="lazy"><span class="play-badge"></span></a>
+        </div>
+        <div class="vid-body">
+          <span class="vid-chan">Cleo Abram — Huge If True</span>
+          <h3>WTF Happened to Nuclear Energy?</h3>
+          <p>The companion piece: an optimistic tech explainer on nuclear's fall and its comeback path, from a creator with millions of subscribers and zero industry ties.</p>
+          <div class="vid-why"><b>Use it for:</b> younger audiences and climate-focused viewers.</div>
+          <a class="watch-cta" href="https://www.youtube.com/watch?v=QzTgZ6kOEM8" target="_blank" rel="noopener">▶ Watch on YouTube →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="more">
+  <div class="wrap">
+    <p class="eyebrow">Keep Going</p>
+    <h2>More channels worth your time</h2>
+    <div class="more-list">
+      <div class="more-row">
+        <span class="m-chan">Kurzgesagt</span>
+        <div><h3>"How Many People Did Nuclear Energy Kill?" &amp; "3 Reasons Why Nuclear Energy Is Awesome"</h3><p>Animated deep-dives on nuclear's actual death toll per terawatt-hour — dramatically lower than fossil fuels.</p></div>
+        <a class="m-link" href="https://www.youtube.com/results?search_query=kurzgesagt+nuclear+energy" target="_blank" rel="noopener">Watch on YouTube →</a>
+      </div>
+      <div class="more-row">
+        <span class="m-chan">Kyle Hill</span>
+        <div><h3>Half-Life Histories series</h3><p>Rigorous, gripping breakdowns of every major nuclear accident — what actually happened vs. what people believe happened.</p></div>
+        <a class="m-link" href="https://www.youtube.com/@kylehill" target="_blank" rel="noopener">Visit channel →</a>
+      </div>
+      <div class="more-row">
+        <span class="m-chan">Cleo Abram</span>
+        <div><h3>"The Big Lie About Nuclear Waste" and the Huge If True nuclear series</h3><p>Includes videos on plant closures, fusion, and the clean energy misconception.</p></div>
+        <a class="m-link" href="https://www.youtube.com/@CleoAbram" target="_blank" rel="noopener">Visit channel →</a>
+      </div>
+      <div class="more-row">
+        <span class="m-chan">T. Folse Nuclear</span>
+        <div><h3>Nuclear Engineer Reacts series</h3><p>A working nuclear engineer fact-checks popular nuclear content — the credibility layer for everything above.</p></div>
+        <a class="m-link" href="https://www.youtube.com/results?search_query=nuclear+engineer+reacts+T+Folse" target="_blank" rel="noopener">Watch on YouTube →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <p class="eyebrow">Now Do Something With It</p>
+    <h2 style="max-width:22ch;margin:14px auto 26px">Convinced? There's a petition with your name on it.</h2>
+    <a class="btn" href="/#join">Join the Campaign</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="logo" style="font-size:15px">SHOREHAM<b>POWER</b>.COM</span>
+    <p class="disclaimer">Videos are embedded from YouTube and belong to their respective creators, who are not affiliated with and have not endorsed this campaign. They are shared here as independent educational resources.</p>
+  </div>
+</footer>
+
+</body>
+</html>

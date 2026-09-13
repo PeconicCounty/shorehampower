@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shoreham Power — Bring Nuclear Back to Long Island</title>
+<meta name="description" content="A citizen campaign to bring advanced nuclear power to the Shoreham site — lower electric bills, energy independence, and clean baseload power for Suffolk County and Long Island.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,600..900&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#081826;          /* night over the Sound */
+    --ink-2:#0E2436;
+    --paper:#F4F3EE;        /* dune paper */
+    --sand:#DCD2BC;
+    --cherenkov:#3FD7FF;    /* reactor-pool glow */
+    --cherenkov-deep:#1877D2;
+    --signal:#FFB03A;       /* channel-marker amber */
+    --line:rgba(63,215,255,.22);
+    --max:1120px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--paper);font-family:'Public Sans',system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--cherenkov);color:var(--ink)}
+  a{color:var(--cherenkov);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--cherenkov)}
+  h1,h2,h3{font-family:'Archivo',sans-serif;font-stretch:125%;line-height:1.04;letter-spacing:-.01em}
+  h2{font-size:clamp(30px,4.6vw,48px);font-weight:800;margin:14px 0 20px}
+  h3{font-size:20px;font-weight:700;margin-bottom:8px}
+  p.lede{font-size:clamp(18px,2.2vw,21px);color:#C9D6DE;max-width:62ch}
+  section{padding:96px 0}
+  .btn{display:inline-block;font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:800;font-size:15px;letter-spacing:.04em;text-transform:uppercase;padding:15px 28px;border-radius:4px;transition:transform .15s ease, box-shadow .15s ease}
+  .btn:hover{text-decoration:none;transform:translateY(-2px)}
+  .btn-glow{background:var(--cherenkov);color:var(--ink);box-shadow:0 0 0 rgba(63,215,255,0)}
+  .btn-glow:hover{box-shadow:0 8px 32px rgba(63,215,255,.35)}
+  .btn-ghost{border:1px solid var(--line);color:var(--paper)}
+  :focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:rgba(8,24,38,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:900;font-size:18px;letter-spacing:.02em;color:var(--paper)}
+  .logo b{color:var(--cherenkov)}
+  .nav-links{display:flex;gap:28px;font-size:14px;font-weight:500}
+  .nav-links a{color:#AEC3CF}
+  .nav-links a:hover{color:var(--cherenkov);text-decoration:none}
+  @media(max-width:820px){.nav-links{display:none}}
+
+  /* TICKER */
+  .ticker{background:var(--cherenkov);color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;overflow:hidden;white-space:nowrap;padding:7px 0}
+  .ticker-track{display:inline-block;animation:tick 38s linear infinite}
+  @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .ticker span{margin:0 28px}
+  @media (prefers-reduced-motion: reduce){.ticker-track{animation:none}}
+
+  /* HERO */
+  .hero{position:relative;padding:110px 0 90px;overflow:hidden;
+    background:
+      radial-gradient(1200px 620px at 72% 110%, rgba(24,119,210,.38), transparent 62%),
+      radial-gradient(900px 460px at 70% 118%, rgba(63,215,255,.30), transparent 58%),
+      var(--ink)}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--cherenkov),transparent);opacity:.6}
+  .dome{position:absolute;bottom:-40px;right:-60px;width:520px;height:520px;opacity:.16;pointer-events:none}
+  .hero h1{font-size:clamp(42px,7vw,86px);font-weight:900;text-transform:uppercase;max-width:14ch}
+  .hero h1 em{font-style:normal;color:var(--cherenkov)}
+  .hero .lede{margin:26px 0 36px}
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap}
+  .hero-tag{margin-top:56px;display:flex;gap:14px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7FA0B2}
+  .hero-tag::before{content:"";width:44px;height:1px;background:var(--cherenkov)}
+
+  /* STAT STRIP */
+  .stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ink-2)}
+  .stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  .stat{padding:34px 26px;border-left:1px solid var(--line)}
+  .stat:first-child{border-left:none}
+  .stat .num{font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:900;font-size:clamp(28px,3.4vw,40px);color:var(--cherenkov)}
+  .stat .lbl{font-size:13px;color:#93ABB8;margin-top:6px;line-height:1.45}
+  @media(max-width:820px){.stats .wrap{grid-template-columns:1fr 1fr}.stat:nth-child(3){border-left:none}}
+  @media(max-width:480px){.stats .wrap{grid-template-columns:1fr}.stat{border-left:none;border-top:1px solid var(--line)}}
+
+  /* PRICE SECTION */
+  .light{background:var(--paper);color:var(--ink)}
+  .light .eyebrow{color:var(--cherenkov-deep)}
+  .light p.lede{color:#3A4C58}
+  .bars{margin:44px 0 10px;display:grid;gap:22px;max-width:720px}
+  .bar-row .bar-lbl{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:13px;margin-bottom:8px}
+  .bar{height:34px;border-radius:3px;background:#E6E1D3;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:3px}
+  .bar-li i{width:100%;background:linear-gradient(90deg,var(--cherenkov-deep),var(--cherenkov))}
+  .bar-us i{width:71%;background:#9AA8B0}
+  .src{font-size:12.5px;color:#6E7F8A;font-family:'IBM Plex Mono',monospace}
+  .case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:54px}
+  .case-card{background:#fff;border:1px solid #E3DCCB;border-radius:6px;padding:28px;box-shadow:0 1px 0 rgba(8,24,38,.05)}
+  .case-card h3{color:var(--ink)}
+  .case-card p{font-size:15px;color:#465864}
+  .case-card .k{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cherenkov-deep);display:block;margin-bottom:12px}
+  @media(max-width:820px){.case-grid{grid-template-columns:1fr}}
+
+  /* TIMELINE */
+  .timeline{position:relative;margin-top:56px;padding-left:34px;border-left:2px solid var(--line);max-width:760px}
+  .t-item{position:relative;padding:0 0 44px 26px}
+  .t-item::before{content:"";position:absolute;left:-42px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--ink);border:2px solid var(--cherenkov)}
+  .t-item.milestone::before{background:var(--cherenkov);box-shadow:0 0 18px rgba(63,215,255,.7)}
+  .t-year{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--cherenkov);letter-spacing:.12em}
+  .t-item h3{margin-top:4px}
+  .t-item p{color:#AEC3CF;font-size:15.5px;max-width:58ch}
+  .t-item.future{opacity:.95}
+  .t-item.future .t-year{color:var(--signal)}
+  .t-item.future::before{border-color:var(--signal);background:var(--ink)}
+
+  /* STUDIES */
+  .studies-list{margin-top:44px;display:grid;gap:0;border-top:1px solid var(--line)}
+  .study{display:grid;grid-template-columns:120px 1fr auto;gap:24px;align-items:baseline;padding:26px 8px;border-bottom:1px solid var(--line);transition:background .15s}
+  .study:hover{background:rgba(63,215,255,.05)}
+  .study .s-tag{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#7FA0B2}
+  .study h3{font-size:17px;font-weight:700}
+  .study p{font-size:14px;color:#93ABB8;margin-top:4px}
+  .study .s-link{font-family:'IBM Plex Mono',monospace;font-size:12.5px;white-space:nowrap}
+  @media(max-width:680px){.study{grid-template-columns:1fr}}
+
+  /* FAQ */
+  details{border-bottom:1px solid var(--line);padding:22px 4px}
+  summary{cursor:pointer;font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:700;font-size:18px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-weight:600;color:var(--cherenkov);font-size:22px;transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{margin-top:14px;color:#AEC3CF;font-size:15.5px;max-width:70ch}
+
+  /* SIGNUP */
+  .signup{background:linear-gradient(180deg,var(--ink-2),var(--ink));border-top:1px solid var(--line);text-align:center}
+  .signup h2{max-width:20ch;margin-left:auto;margin-right:auto}
+  .signup-form{margin:36px auto 0;display:flex;gap:12px;max-width:520px;flex-wrap:wrap;justify-content:center}
+  .signup-form input{flex:1;min-width:240px;padding:15px 18px;border-radius:4px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--paper);font-size:15px;font-family:inherit}
+  .signup-form input::placeholder{color:#6E8896}
+  footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:#6E8896}
+  .foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .disclaimer{font-size:12px;color:#54707F;max-width:70ch;margin-top:12px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-in">
+    <a class="logo" href="#top">SHOREHAM<b>POWER</b>.COM</a>
+    <div class="nav-links">
+      <a href="#case">The Case</a>
+      <a href="#history">History</a>
+      <a href="#studies">Studies</a>
+      <a href="#faq">FAQ</a>
+      <a href="/videos.html">Video Library</a>
+      <a class="btn btn-glow" style="padding:10px 18px;font-size:12.5px" href="#join">Join the Campaign</a>
+    </div>
+  </div>
+</nav>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>LI RESIDENTIAL RATE ≈ 23.6–27¢/kWh</span><span>US AVERAGE ≈ 17¢/kWh</span><span>ZONE K: ISLANDED LOAD POCKET — IMPORT-CONSTRAINED</span><span>NY NUCLEAR BACKBONE TARGET: 8.4 GW</span><span>SHOREHAM SITE: GRID-CONNECTED · COASTAL COOLING · INDUSTRIAL ZONING</span>
+    <span>LI RESIDENTIAL RATE ≈ 23.6–27¢/kWh</span><span>US AVERAGE ≈ 17¢/kWh</span><span>ZONE K: ISLANDED LOAD POCKET — IMPORT-CONSTRAINED</span><span>NY NUCLEAR BACKBONE TARGET: 8.4 GW</span><span>SHOREHAM SITE: GRID-CONNECTED · COASTAL COOLING · INDUSTRIAL ZONING</span>
+  </div>
+</div>
+
+<header class="hero" id="top">
+  <svg class="dome" viewBox="0 0 200 200" aria-hidden="true">
+    <path d="M30 170 L30 100 A70 70 0 0 1 170 100 L170 170 Z" fill="none" stroke="#3FD7FF" stroke-width="1.5"/>
+    <path d="M45 170 L45 100 A55 55 0 0 1 155 100 L155 170" fill="none" stroke="#3FD7FF" stroke-width="0.75"/>
+    <line x1="10" y1="170" x2="190" y2="170" stroke="#3FD7FF" stroke-width="1.5"/>
+  </svg>
+  <div class="wrap">
+    <p class="eyebrow">A citizen campaign for Suffolk County &amp; Long Island</p>
+    <h1>Power <em>Shoreham</em>. Finish what we started.</h1>
+    <p class="lede">Long Islanders paid $6 billion for a nuclear plant that never sold a single watt — and we're still paying some of the highest electric rates in America. It's time to bring advanced nuclear power back to the Shoreham site and finally get what we paid for: clean, reliable, affordable electricity.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-glow" href="#join">Add Your Name</a>
+      <a class="btn btn-ghost" href="#case">Read the Case</a>
+    </div>
+    <div class="hero-tag">40.9611° N, 72.8650° W — EAST SHOREHAM, LONG ISLAND SOUND</div>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="wrap">
+    <div class="stat"><div class="num">~40%</div><div class="lbl">How far Long Island electric rates run above the national average</div></div>
+    <div class="stat"><div class="num">$6B</div><div class="lbl">What ratepayers spent building Shoreham — debt still being paid through 2033</div></div>
+    <div class="stat"><div class="num">0 kWh</div><div class="lbl">Commercial electricity Shoreham ever delivered to Long Island homes</div></div>
+    <div class="stat"><div class="num">8.4 GW</div><div class="lbl">New York's target for a statewide nuclear "reliability backbone"</div></div>
+  </div>
+</div>
+
+<section class="light" id="case">
+  <div class="wrap">
+    <p class="eyebrow">The Case for Nuclear at Shoreham</p>
+    <h2>We live in a power trap. Nuclear is the way out.</h2>
+    <p class="lede">Long Island is NYISO Zone K — an islanded grid with limited transmission into it. Even when power is cheap elsewhere in New York, it can't reach us. Roughly 90% of our on-island generation burns natural gas, so every fuel spike lands directly on your bill.</p>
+
+    <div class="bars">
+      <div class="bar-row">
+        <div class="bar-lbl"><span>LONG ISLAND (PSEG-LI RESIDENTIAL)</span><span>≈ 23.6¢/kWh</span></div>
+        <div class="bar bar-li"><i></i></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl"><span>U.S. NATIONAL AVERAGE</span><span>≈ 16.8¢/kWh</span></div>
+        <div class="bar bar-us"><i></i></div>
+      </div>
+    </div>
+    <p class="src">Sources: PSEG Long Island tariff schedule (2026); U.S. Energy Information Administration.</p>
+
+    <div class="case-grid">
+      <div class="case-card">
+        <span class="k">Affordability</span>
+        <h3>Break the gas dependency</h3>
+        <p>The Power Supply Charge on your bill moves with natural gas markets — it jumped over 13% in a single month in early 2026. On-island nuclear baseload means stable fuel costs for 60–80 years and less exposure to price shocks Long Island can't control.</p>
+      </div>
+      <div class="case-card">
+        <span class="k">Reliability</span>
+        <h3>Firm power for an island grid</h3>
+        <p>Nuclear plants run at 90%+ capacity factors — day, night, heat wave, nor'easter. As Long Island electrifies homes, cars, and businesses, Zone K needs firm zero-emission generation inside the load pocket, not just imports that can't physically reach us.</p>
+      </div>
+      <div class="case-card">
+        <span class="k">Economy</span>
+        <h3>Jobs and a stronger tax base</h3>
+        <p>A modern nuclear facility means hundreds of permanent, high-wage union careers, thousands of construction jobs, and decades of tax revenue for the Shoreham-Wading River schools and Brookhaven — with Brookhaven National Laboratory's nuclear science expertise right down the road.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="history">
+  <div class="wrap">
+    <p class="eyebrow">The History</p>
+    <h2>The plant that never was — and the moment that's here now.</h2>
+    <p class="lede">Shoreham is the only fully completed U.S. nuclear plant decommissioned without ever entering commercial operation. Its story explains our bills today — and why the second chance matters.</p>
+
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-year">1965–1973</div>
+        <h3>LILCO proposes Shoreham</h3>
+        <p>The Long Island Lighting Company announces a nuclear plant on Long Island Sound, originally estimated under $100 million. Construction of the 820 MW GE boiling water reactor begins in 1973.</p>
+      </div>
+      <div class="t-item">
+        <div class="t-year">1979</div>
+        <h3>Three Mile Island changes everything</h3>
+        <p>The partial meltdown in Pennsylvania supercharges opposition. Some 15,000 people rally at Shoreham. Evacuation planning for Long Island's geography becomes the central fight.</p>
+      </div>
+      <div class="t-item">
+        <div class="t-year">1984–1989</div>
+        <h3>Complete — but never switched on</h3>
+        <p>The finished plant receives a low-power testing license and runs at 5% capacity. That's as far as it ever gets. Suffolk County refuses to approve evacuation plans; costs balloon to $5.5–6 billion. In 1989, the state brokers a deal to shut it down.</p>
+      </div>
+      <div class="t-item milestone">
+        <div class="t-year">1992–1994</div>
+        <h3>Sold for one dollar, dismantled</h3>
+        <p>LILCO sells Shoreham to the Long Island Power Authority for $1. Fuel and reactor internals are removed and the plant is decommissioned — the first in U.S. history to be retired without ever going commercial. Ratepayers absorb the debt, which won't be paid off until 2033.</p>
+      </div>
+      <div class="t-item">
+        <div class="t-year">1998–2025</div>
+        <h3>The long hangover</h3>
+        <p>LIPA replaces LILCO. Long Island's rates stay among the nation's highest. The site hosts a small gas peaker, two wind turbines, and — approved in 2026 — battery storage. The grid connection, substation, and industrial site remain.</p>
+      </div>
+      <div class="t-item milestone">
+        <div class="t-year">2025–2026</div>
+        <h3>New York goes nuclear again</h3>
+        <p>Governor Hochul directs NYPA to build at least 1 GW of new advanced nuclear and announces an 8.4 GW statewide Nuclear Reliability Backbone. Plants like Palisades and Three Mile Island are being restarted nationwide. Public opinion has shifted. The question is no longer whether New York builds nuclear — it's where.</p>
+      </div>
+      <div class="t-item future">
+        <div class="t-year">NEXT</div>
+        <h3>Shoreham's second chance</h3>
+        <p>The original reactor is gone — this is not about flipping an old switch. It's about siting a new generation of advanced reactors on a site that already has grid interconnection, coastal cooling water, industrial zoning, and a community that has paid nuclear prices for 40 years without nuclear power. Long Island deserves a seat at the table in New York's nuclear buildout.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light" id="studies">
+  <div class="wrap" style="color:var(--ink)">
+    <p class="eyebrow">Research Library</p>
+    <h2 style="color:var(--ink)">Studies &amp; source material</h2>
+    <p class="lede">We believe this case wins on the facts. Read the primary sources yourself.</p>
+
+    <div class="studies-list" style="border-color:#DCD2BC">
+      <div class="study" style="border-color:#DCD2BC">
+        <span class="s-tag" style="color:#8A7B5C">STATE POLICY</span>
+        <div><h3 style="color:var(--ink)">NYSERDA — Blueprint &amp; Master Plan for Advanced Nuclear in New York</h3><p style="color:#5C6B76">The state's official framework for siting and financing new advanced nuclear, including the 8.4 GW Reliability Backbone proceeding.</p></div>
+        <a class="s-link" style="color:var(--cherenkov-deep)" href="https://www.nyserda.ny.gov/All-Programs/Advanced-Nuclear-Energy" target="_blank" rel="noopener">nyserda.ny.gov →</a>
+      </div>
+      <div class="study" style="border-color:#DCD2BC">
+        <span class="s-tag" style="color:#8A7B5C">STATE POLICY</span>
+        <div><h3 style="color:var(--ink)">NYPA — Advanced Nuclear Development Program</h3><p style="color:#5C6B76">The Power Authority's directive to develop at least 1 GW of new nuclear, its developer RFQ, and $40M nuclear workforce initiative.</p></div>
+        <a class="s-link" style="color:var(--cherenkov-deep)" href="https://www.nypa.gov/nuclear" target="_blank" rel="noopener">nypa.gov/nuclear →</a>
+      </div>
+      <div class="study" style="border-color:#DCD2BC">
+        <span class="s-tag" style="color:#8A7B5C">GRID DATA</span>
+        <div><h3 style="color:var(--ink)">NYISO — Power Trends Report</h3><p style="color:#5C6B76">The grid operator's annual outlook: shrinking reliability margins, surging demand, and Long Island's Zone K constraints.</p></div>
+        <a class="s-link" style="color:var(--cherenkov-deep)" href="https://www.nyiso.com" target="_blank" rel="noopener">nyiso.com →</a>
+      </div>
+      <div class="study" style="border-color:#DCD2BC">
+        <span class="s-tag" style="color:#8A7B5C">RATES</span>
+        <div><h3 style="color:var(--ink)">PSEG Long Island — Rate Information &amp; Power Supply Charge</h3><p style="color:#5C6B76">Current tariffs showing what Long Islanders actually pay, and how the pass-through fuel charge moves month to month.</p></div>
+        <a class="s-link" style="color:var(--cherenkov-deep)" href="https://www.psegliny.com/aboutpseglongisland/ratesandtariffs/rateinformation" target="_blank" rel="noopener">psegliny.com →</a>
+      </div>
+      <div class="study" style="border-color:#DCD2BC">
+        <span class="s-tag" style="color:#8A7B5C">RATES</span>
+        <div><h3 style="color:var(--ink)">U.S. EIA — Electric Power Monthly</h3><p style="color:#5C6B76">Federal data comparing New York and Long Island rates against national averages.</p></div>
+        <a class="s-link" style="color:var(--cherenkov-deep)" href="https://www.eia.gov/electricity/monthly/" target="_blank" rel="noopener">eia.gov →</a>
+      </div>
+      <div class="study" style="border-color:#DCD2BC">
+        <span class="s-tag" style="color:#8A7B5C">HISTORY</span>
+        <div><h3 style="color:var(--ink)">Stony Brook University — Shoreham &amp; Three Mile Island Collection</h3><p style="color:#5C6B76">Archival records of the original Shoreham fight, held by Special Collections at Stony Brook.</p></div>
+        <a class="s-link" style="color:var(--cherenkov-deep)" href="https://www.stonybrook.edu/commcms/libspecial/collections/manuscripts/shoreham.php" target="_blank" rel="noopener">stonybrook.edu →</a>
+      </div>
+      <div class="study" style="border-color:#DCD2BC">
+        <span class="s-tag" style="color:#8A7B5C">PRECEDENT</span>
+        <div><h3 style="color:var(--ink)">Restarts nationwide: Palisades, Three Mile Island, Duane Arnold</h3><p style="color:#5C6B76">Utilities and companies like Microsoft and Google are reviving shuttered plants — proof of nuclear's changed economics and public standing.</p></div>
+        <a class="s-link" style="color:var(--cherenkov-deep)" href="https://www.energy.gov" target="_blank" rel="noopener">energy.gov →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <p class="eyebrow">Straight Answers</p>
+    <h2>Questions Long Islanders are asking</h2>
+    <div style="margin-top:36px;max-width:820px">
+      <details>
+        <summary>Can you just restart the old Shoreham reactor?</summary>
+        <p>No — and we won't pretend otherwise. The original reactor's fuel and internals were removed during decommissioning in the early 1990s. Unlike Palisades or Three Mile Island, there's nothing to restart. What Shoreham has is arguably more valuable for new construction: an existing grid interconnection and substation, coastal cooling water, industrial zoning, and transmission infrastructure. This campaign is about siting new advanced reactors — including small modular reactors (SMRs) — at or near the site.</p>
+      </details>
+      <details>
+        <summary>What about the evacuation concerns that killed Shoreham the first time?</summary>
+        <p>Modern advanced reactor designs are fundamentally different from 1970s designs — passive safety systems that shut down without power or operator action, smaller cores, and lower operating pressures. The NRC's emergency planning frameworks for SMRs reflect these smaller risk profiles, with some designs qualifying for emergency planning zones limited to the site boundary itself rather than a 10-mile radius. Those are exactly the questions a formal siting study should answer publicly and rigorously.</p>
+      </details>
+      <details>
+        <summary>Would this actually lower my electric bill?</summary>
+        <p>No single plant fixes everything, but the fundamentals point the right way: Long Island pays a premium because we're an import-constrained island burning natural gas. Firm on-island generation with stable fuel costs reduces both the Zone K congestion premium and our exposure to gas price spikes. First-of-a-kind nuclear is expensive to build — which is why state and federal financing support, and New York's fleet-style deployment approach, matter so much.</p>
+      </details>
+      <details>
+        <summary>Why not just build more solar, wind, and batteries?</summary>
+        <p>We should — and Long Island is. But renewables and storage alone can't cover multi-day winter demand on an islanded grid, and offshore wind projects have faced their own delays and cost overruns. New York's own energy plan treats nuclear as the firm, zero-emission complement to renewables, not a competitor to them. The Shoreham site already hosts wind turbines and approved battery storage; nuclear would complete the picture.</p>
+      </details>
+      <details>
+        <summary>Who is behind this campaign?</summary>
+        <p>Shoreham Power is an independent citizen advocacy effort. We are not affiliated with LIPA, PSEG Long Island, NYPA, or any reactor vendor. Our goal is simple: get Long Island formally included in New York's nuclear siting conversation, starting with a state-commissioned feasibility study for the Shoreham site.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="signup" id="join">
+  <div class="wrap">
+    <p class="eyebrow">Join the Campaign</p>
+    <h2>Forty years of nuclear prices. Zero watts of nuclear power. Let's fix that.</h2>
+    <p class="lede" style="margin:20px auto 0;text-align:center">Add your name to call on New York State to include the Shoreham site in its Nuclear Reliability Backbone feasibility studies.</p>
+    <form class="signup-form" onsubmit="event.preventDefault();this.innerHTML='<p style=&quot;font-family:IBM Plex Mono,monospace;color:#3FD7FF&quot;>✓ You\'re on the list. Welcome to the campaign.</p>'">
+      <input type="text" placeholder="Full name" aria-label="Full name" required>
+      <input type="email" placeholder="Email address" aria-label="Email address" required>
+      <input type="text" placeholder="ZIP code" aria-label="ZIP code" style="min-width:120px;flex:0 1 140px" required>
+      <button class="btn btn-glow" type="submit">Add My Name</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-in">
+      <span class="logo" style="font-size:15px">SHOREHAM<b>POWER</b>.COM</span>
+      <span>info@shorehampower.com · East Shoreham, NY</span>
+    </div>
+    <p class="disclaimer">Shoreham Power is an independent citizen advocacy campaign. Rate figures are approximate and drawn from PSEG Long Island tariff schedules and U.S. EIA data as of 2026; see the Research Library for primary sources. This site is not affiliated with LIPA, PSEG Long Island, the New York Power Authority, or any energy company.</p>
+  </div>
+</footer>
+
+</body>
+</html>
